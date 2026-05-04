@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Мир животных | Энциклопедия фауны</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(145deg, #f4f7f2 0%, #e3ebd9 100%);
+            font-family: system-ui, 'Segoe UI', 'Roboto', 'Noto Sans', sans-serif;
+            color: #1e2a1c;
+            line-height: 1.5;
+        }
+
+        /* контейнер с мягкой центровкой */
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        /* Шапка */
+        .hero {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 1rem 0.5rem;
+            border-bottom: 2px solid #c7d6b5;
+        }
+        .hero h1 {
+            font-size: 2.7rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #2b5e2b, #5f8b3e);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            letter-spacing: -0.02em;
+            margin-bottom: 0.5rem;
+        }
+        .hero p {
+            font-size: 1.2rem;
+            color: #3a5835;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        .badge {
+            display: inline-block;
+            background: #e9f0e2;
+            padding: 0.3rem 1rem;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-top: 1rem;
+            color: #2c5e2a;
+            box-shadow: inset 0 0 0 1px #bfd6aa;
+        }
+
+        /* сетка карточек — без фото, только текст и символы */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        /* карточка животного — без hover-эффектов и анимаций */
+        .animal-card {
+            background: #fffef7;
+            border-radius: 2rem;
+            padding: 1.5rem;
+            box-shadow: 0 8px 20px -6px rgba(0, 20, 0, 0.1);
+            border: 1px solid #e2efd0;
+        }
+
+        .animal-icon {
+            font-size: 3.5rem;
+            line-height: 1;
+            margin-bottom: 0.75rem;
+        }
+        .animal-card h3 {
+            font-size: 1.7rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.3px;
+            color: #2a4322;
+        }
+        .scientific {
+            font-style: italic;
+            font-size: 0.85rem;
+            color: #6f7e64;
+            border-left: 3px solid #b7cf98;
+            padding-left: 0.6rem;
+            margin-bottom: 1rem;
+        }
+        .description {
+            color: #2d3a28;
+            margin-bottom: 1rem;
+            font-weight: 450;
+        }
+        .features {
+            list-style: none;
+            margin: 1rem 0 0.5rem 0;
+            background: #f8faf2;
+            border-radius: 1.2rem;
+            padding: 0.8rem 1rem;
+        }
+        .features li {
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+            font-size: 0.9rem;
+        }
+        .features li strong {
+            font-weight: 700;
+            min-width: 85px;
+            color: #436634;
+        }
+        .feature-value {
+            color: #1e2f1c;
+        }
+        hr {
+            margin: 1rem 0 0.5rem;
+            border: none;
+            height: 1px;
+            background: #dcf0ca;
+        }
+
+        /* секция интересных фактов */
+        .facts-section {
+            background: #eef3e7;
+            border-radius: 2rem;
+            padding: 2rem 1.8rem;
+            margin: 2rem 0 3rem;
+            box-shadow: inset 0 0 0 1px #ccddb5;
+        }
+        .facts-section h2 {
+            font-size: 1.9rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin-bottom: 1.5rem;
+            color: #2e5827;
+        }
+        .facts-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.2rem;
+            justify-content: space-between;
+        }
+        .fact-card {
+            background: white;
+            border-radius: 1.5rem;
+            padding: 1.2rem 1.5rem;
+            flex: 1 1 220px;
+            border: 1px solid #d7e8c4;
+        }
+        .fact-emoji {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        .fact-text {
+            font-weight: 500;
+            font-size: 1rem;
+        }
+
+        /* блок "животные рекорды" без фото */
+        .records {
+            background: #dadfcb;
+            border-radius: 2rem;
+            padding: 1.8rem;
+            margin: 2rem 0;
+        }
+        .records h2 {
+            font-size: 1.7rem;
+            margin-bottom: 1rem;
+            display: flex;
+            gap: 0.5rem;
+        }
+        .record-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: flex-start;
+        }
+        .record-item {
+            background: rgba(255,255,245,0.9);
+            border-radius: 3rem;
+            padding: 0.6rem 1.2rem;
+            font-weight: 500;
+            font-size: 0.95rem;
+            box-shadow: inset 0 0 0 1px #edfae0;
+        }
+
+        /* подвал */
+        footer {
+            margin-top: 3rem;
+            text-align: center;
+            border-top: 1px solid #cde0b8;
+            padding: 2rem 0.5rem 1rem;
+            font-size: 0.85rem;
+            color: #5b7352;
+        }
+
+        @media (max-width: 680px) {
+            .container {
+                padding: 1.2rem;
+            }
+            .hero h1 {
+                font-size: 2rem;
+            }
+            .animal-card h3 {
+                font-size: 1.4rem;
+            }
+            .facts-section h2 {
+                font-size: 1.5rem;
+            }
+        }
+        /* декоративная линия — статичная */
+        .leaf-divider {
+            height: 8px;
+            background: repeating-linear-gradient(90deg, #bbd9a2, #bbd9a2 12px, #dfedcd 12px, #dfedcd 24px);
+            width: 100px;
+            margin: 1rem auto;
+            border-radius: 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="hero">
+        <h1>🐾 Звериная энциклопедия</h1>
+        <p>Удивительный мир животных: от лесов Амазонки до саванн Африки</p>
+
+    <!-- Сетка из 6 животных, яркие описания, без фото -->
+    <div class="cards-grid">
+        <!-- Африканский слон -->
+        <div class="animal-card">
+            <div class="animal-icon">🐘</div>
+            <h3>Африканский слон</h3>
+            <div class="scientific">Loxodonta africana</div>
+            <div class="description">
+                Крупнейшее сухопутное животное на планете. Слоны обладают сложной социальной структурой, 
+                отличной памятью и развитым интеллектом. Бивни растут всю жизнь.
+            </div>
+            <ul class="features">
+                <li><strong>🍃 Масса:</strong><span class="feature-value"> до 7 тонн</span></li>
+                <li><strong>⏳ Живут:</strong><span class="feature-value"> 60–70 лет</span></li>
+                <li><strong>💧 Воды:</strong><span class="feature-value"> до 150 л/день</span></li>
+            </ul>
+        </div>
+        <!-- Гепард -->
+        <div class="animal-card">
+            <div class="animal-icon">🐆</div>
+            <h3>Гепард</h3>
+            <div class="scientific">Acinonyx jubatus</div>
+            <div class="description">
+                Абсолютный рекордсмен по скорости среди наземных животных. Разгоняется до 100 км/ч за три секунды, 
+                но не может долго бежать на пределе.
+            </div>
+            <ul class="features">
+                <li><strong>⚡ Скорость:</strong><span class="feature-value"> до 115 км/ч</span></li>
+                <li><strong>🐾 Когти:</strong><span class="feature-value"> не втягиваются (особенность)</span></li>
+                <li><strong>👀 Зрение:</strong><span class="feature-value"> острое, пятнистый окрас маскирует</span></li>
+            </ul>
+        </div>
+        <!-- Синий кит -->
+        <div class="animal-card">
+            <div class="animal-icon">🐋</div>
+            <h3>Синий кит</h3>
+            <div class="scientific">Balaenoptera musculus</div>
+            <div class="description">
+                Самое большое животное за всю историю Земли — даже крупнее динозавров. 
+                Сердце кита размером с небольшой автомобиль, а язык весит как слон.
+            </div>
+            <ul class="features">
+                <li><strong>📏 Длина:</strong><span class="feature-value"> до 33 метров</span></li>
+                <li><strong>🍽️ Пища:</strong><span class="feature-value"> криль, до 4 тонн в день</span></li>
+                <li><strong>🎵 Звуки:</strong><span class="feature-value"> инфразвук на сотни км</span></li>
+            </ul>
+        </div>
+        <!-- Обыкновенный дельфин -->
+        <div class="animal-card">
+            <div class="animal-icon">🐬</div>
+            <h3>Афалина</h3>
+            <div class="scientific">Tursiops truncatus</div>
+            <div class="description">
+                Один из самых умных морских обитателей. Дельфины общаются с помощью сложных звуковых сигналов, 
+                узнают себя в зеркале и помогают сородичам.
+            </div>
+            <ul class="features">
+                <li><strong>🧠 Мозг:</strong><span class="feature-value"> 1.6 кг (больше, чем у человека)</span></li>
+                <li><strong>🌊 Эхолокация:</strong><span class="feature-value"> идеальная</span></li>
+                <li><strong>👨‍👩‍👧‍👦 Группы:</strong><span class="feature-value"> до 15 особей</span></li>
+            </ul>
+        </div>
+        <!-- Панда -->
+        <div class="animal-card">
+            <div class="animal-icon">🐼</div>
+            <h3>Большая панда</h3>
+            <div class="scientific">Ailuropoda melanoleuca</div>
+            <div class="description">
+                Символ дикой природы Китая. Несмотря на принадлежность к хищным, панды питаются в основном бамбуком — 
+                до 38 кг в день! Отличные альпинисты.
+            </div>
+            <ul class="features">
+                <li><strong>🎋 Рацион:</strong><span class="feature-value"> 99% бамбук</span></li>
+                <li><strong>🐾 Лапы:</strong><span class="feature-value"> "шестой палец" для захвата</span></li>
+                <li><strong>🗺️ Ареал:</strong><span class="feature-value"> горные леса Китая</span></li>
+            </ul>
+        </div>
+        <!-- Обыкновенный ёж -->
+        <div class="animal-card">
+            <div class="animal-icon">🦔</div>
+            <h3>Ёж обыкновенный</h3>
+            <div class="scientific">Erinaceus europaeus</div>
+            <div class="description">
+                Ночной зверёк, покрытый иголками (видоизменённые волосы). При опасности сворачивается в клубок, 
+                впадает в спячку зимой. Поедает насекомых, слизней и даже ядовитых жуков.
+            </div>
+            <ul class="features">
+                <li><strong>🪡 Иглы:</strong><span class="feature-value"> до 7000 штук</span></li>
+                <li><strong>❄️ Спячка:</strong><span class="feature-value"> 5–6 месяцев</span></li>
+                <li><strong>👃 Нюх:</strong><span class="feature-value"> отличный, но зрение слабое</span></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Блок интересных фактов (без иллюстраций) -->
+    <div class="facts-section">
+        <h2>✨ Маленькие зоосекреты</h2>
+        <div class="facts-grid">
+            <div class="fact-card">
+                <div class="fact-emoji">🐙</div>
+                <div class="fact-text">Осьминоги имеют три сердца и голубую кровь.</div>
+            </div>
+            <div class="fact-card">
+                <div class="fact-emoji">🦒</div>
+                <div class="fact-text">Шея жирафа состоит из 7 позвонков — как у человека!</div>
+            </div>
+            <div class="fact-card">
+                <div class="fact-emoji">🐧</div>
+                <div class="fact-text">Императорские пингвины могут задерживать дыхание на 20 минут.</div>
+            </div>
+            <div class="fact-card">
+                <div class="fact-emoji">🐝</div>
+                <div class="fact-text">Медоносные пчёлы распознают человеческие лица.</div>
+            </div>
+            <div class="fact-card">
+                <div class="fact-emoji">🐊</div>
+                <div class="fact-text">Крокодилы глотают камни для лучшего пищеварения и плавучести.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- рекорды среди животных (только текстовые данные) -->
+    <div class="records">
+        <h2>🏆 Мировые рекорды в мире животных</h2>
+        <div class="record-list">
+            <span class="record-item">⚡ Самый быстрый: гепард (115 км/ч)</span>
+            <span class="record-item">🐘 Самое тяжёлое: синий кит (до 190 тонн)</span>
+            <span class="record-item">🐦 Долгожитель: гренландская акула (400+ лет)</span>
+            <span class="record-item">🏃 Выносливый: страус (бег 70 км/ч на дистанции)</span>
+            <span class="record-item">🧠 Высокий интеллект: шимпанзе и дельфины</span>
+            <span class="record-item">🌍 Самая большая миграция: арктическая крачка (70 тыс. км/год)</span>
+        </div>
+        <p style="margin-top: 1.2rem; font-size: 0.9rem; opacity: 0.8;">⭐ Все данные основаны на научных наблюдениях и энциклопедиях природы.</p>
+    </div>
+
+    <!-- дополнительный познавательный блок: зоны обитания (без фото, только интересные статьи) -->
+    <div style="background: #fefce8; border-radius: 2rem; padding: 1.8rem; margin: 1.5rem 0; border: 1px solid #e2eacf;">
+        <div style="display: flex; gap: 0.8rem; align-items: center; flex-wrap: wrap; justify-content: space-between;">
+            <div>
+                <h3 style="font-size: 1.5rem; margin-bottom: 0.3rem;">🌍 Удивительные места обитания</h3>
+                <p style="color: #4a6140;">Животные адаптировались к самым суровым условиям планеты</p>
+            </div>
+            <div style="font-size: 2rem;">🏔️🏜️❄️</div>
+        </div>
+        <div style="display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1.2rem;">
+            <div style="flex: 1; min-width: 180px; background: #fff5e0; border-radius: 1.2rem; padding: 1rem;">
+                <strong>🏜️ Пустыня Сахара</strong><br>
+                Фенек (лисичка с огромными ушами) — отлично рассеивает тепло. Верблюды могут терять до 40% воды без вреда.
+            </div>
+            <div style="flex: 1; min-width: 180px; background: #fff5e0; border-radius: 1.2rem; padding: 1rem;">
+                <strong>❄️ Арктика</strong><br>
+                Белые медведи: чёрная кожа под мехом помогает ловить солнечное тепло. Нервюрные киты ныряют на 2 км!
+            </div>
+            <div style="flex: 1; min-width: 180px; background: #fff5e0; border-radius: 1.2rem; padding: 1rem;">
+                <strong>🌳 Амазонские джунгли</strong><br>
+                Ягуар — скрытный хищник с мощнейшим укусом. Ленивцы спят до 20 часов, а их шерсть — маленькая экосистема.
+            </div>
+        </div>
+    </div>
+
+    <!-- цитата о важности биоразнообразия -->
+    <div style="margin: 2rem 0; padding: 1rem 1.5rem; background: #e2efd2; border-radius: 2rem; text-align: center; font-style: italic;">
+        <p style="font-size: 1.1rem;">🐅 «Сохранить природу — значит сохранить самих себя. Каждый вид — уникальное звено эволюции»</p>
+        <p style="margin-top: 0.5rem; font-weight: ;">— Международный союз охраны природы (МСОП)</p>
+    </div>
+
+    <footer>
+        <p>🐘 Мир животных без фото — только текстовые энциклопедии и увлекательные факты</p>
+        <p style="margin-top: 0.5rem;">📚 Все описания основаны на научно-популярных данных.</p>
+        <p style="margin-top: 0.8rem;">🌱 Берегите животных и природу · 2026</p>
+    </footer>
+</div>
+</body>
+</html>
